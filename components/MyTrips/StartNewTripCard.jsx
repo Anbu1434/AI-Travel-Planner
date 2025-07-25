@@ -2,15 +2,21 @@ import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'rea
 import React, { useState } from 'react';
 import LottieView from 'lottie-react-native';
 import locationAnimation from '../../assets/animation/location.json';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router'; // Changed to use expo-router
 
 export default function StartNewTripCard() {
   const [isLoading, setIsLoading] = useState(false);
-  const navigation = useNavigation(); // Correct navigation approach
+  const router = useRouter(); // Using expo-router's useRouter instead of react-navigation
+
+  const handlePress = () => {
+    setIsLoading(true);
+    router.push('/create-trip/serach-place'); // Corrected route name and using expo-router navigation
+    setIsLoading(false);
+  };
 
   return (
     <View style={styles.container}>
-      {/* Illustration Image */}
+      {/* Illustration Animation */}
       <LottieView
         source={locationAnimation}
         autoPlay
@@ -24,8 +30,16 @@ export default function StartNewTripCard() {
         Looks like it's time to plan a new travel experience! Get started below.
       </Text>
 
-      <TouchableOpacity style={styles.get} onPress={() => navigation.navigate('create-trip/serach-place')}>
-        <Text style={styles.buttonText}>Plan Your Trip</Text>
+      <TouchableOpacity
+        style={styles.get}
+        onPress={handlePress}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Plan Your Trip</Text>
+        )}
       </TouchableOpacity>
     </View>
   );

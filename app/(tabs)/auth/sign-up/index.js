@@ -4,7 +4,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import { Link, useRouter } from 'expo-router';
 import { useFonts } from 'expo-font';
 import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { auth } from '../../../configs/FirebaseConfigs';
+import FirebaseConfigs from '../../../configs/FirebaseConfigs';
 
 export default function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -15,8 +15,8 @@ export default function SignUp() {
   const [fullname, setFullname] = useState('');
 
   const [fontsLoaded] = useFonts({
-    'outfit-bold': require('../../../assets/fonts/Outfit-Bold.ttf'),
-    'outfit-regular': require('../../../assets/fonts/Outfit-Regular.ttf'),
+    'outfit-bold': require('../../../../assets/fonts/Outfit-Bold.ttf'),
+    'outfit-regular': require('../../../../assets/fonts/Outfit-Regular.ttf'),
   });
 
   if (!fontsLoaded) {
@@ -50,7 +50,7 @@ export default function SignUp() {
 
     try {
       setIsLoading(true);
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(FirebaseConfigs.auth, email, password);
       const user = userCredential.user;
       console.log('User created:', user.uid);
       

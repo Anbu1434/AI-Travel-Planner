@@ -1,12 +1,10 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
       "@components/*": ["./components/*"],
-      "@configs/*": ["./configs/*"],
+      "@configs/*": ["./app/configs/*"],
       "@assets/*": ["./assets/*"],
       "@screens/*": ["./app/*"]
     },
@@ -19,18 +17,20 @@
     "isolatedModules": true,
     "noEmit": true,
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true
   },
+  "extends": "expo/tsconfig.base",
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
-    "babel.config.js"
+    "app/_layout.jsx"
   ],
   "exclude": [
     "node_modules",
-    "babel.config.js",
     "metro.config.js",
     "jest.config.js"
   ]

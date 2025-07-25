@@ -8,6 +8,7 @@ module.exports = {
           "@components": "./components",
           "@screens": "./screens",
           "@assets": "./assets",
+          "@configs": "./app/configs" // ✅ Updated alias path
         },
       },
     ],

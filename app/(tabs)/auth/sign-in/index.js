@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import { Link, useRouter } from 'expo-router';
 import { signInWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
-import { auth } from '../../../configs/FirebaseConfigs';
+import FirebaseConfigs from '../../../configs/FirebaseConfigs';
 
 export default function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -31,16 +31,12 @@ export default function SignIn() {
 
     try {
       setIsLoading(true);
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(FirebaseConfigs.auth, email, password);
       const user = userCredential.user;
 
       if (!user.emailVerified) {
-        // Send another verification email if needed
         await sendEmailVerification(user);
-        ToastAndroid.show(
-          'Please verify your email first. A new verification email has been sent.',
-          ToastAndroid.LONG
-        );
+        ToastAndroid.show('Please verify your email first', ToastAndroid.SHORT);
         return;
       }
 
@@ -49,38 +45,35 @@ export default function SignIn() {
       router.replace('/(tabs)/Mytrip');
     } catch (error) {
       console.error('Sign in error:', error.message);
-      
-      if (error.code === 'auth/invalid-credential') {
-        ToastAndroid.show('invalid credential', ToastAndroid.LONG);
-        return;
-      }
-      
+
       let errorMessage = 'An error occurred during sign in';
-      
-      switch (error.code) {
-        case 'auth/invalid-email':
-          errorMessage = 'Invalid email address format';
-          break;
-        case 'auth/user-disabled':
-          errorMessage = 'This account has been disabled';
-          break;
-        case 'auth/user-not-found':
-          errorMessage = 'No account found with this email';
-          break;
-        case 'auth/wrong-password':
-          errorMessage = 'Incorrect password';
-          break;
-        case 'auth/too-many-requests':
-          errorMessage = 'Too many failed attempts. Please try again later';
-          break;
-        case 'auth/network-request-failed':
-          errorMessage = 'Network error. Please check your connection';
-          break;
-        default:
-          errorMessage = 'Sign in failed. Please try again';
-          break;
+      if (error && error.code) {
+        switch (error.code) {
+          case 'auth/invalid-email':
+            errorMessage = 'Invalid email address format';
+            break;
+          case 'auth/user-disabled':
+            errorMessage = 'This account has been disabled';
+            break;
+          case 'auth/user-not-found':
+            errorMessage = 'No account found with this email';
+            break;
+          case 'auth/wrong-password':
+            errorMessage = 'Incorrect password';
+            break;
+          case 'auth/too-many-requests':
+            errorMessage = 'Too many failed attempts. Please try again later';
+            break;
+          case 'auth/network-request-failed':
+            errorMessage = 'Network error. Please check your connection';
+            break;
+          default:
+            errorMessage = 'Sign in failed. Please try again';
+            break;
+        }
+      } else if (error && error.message) {
+        errorMessage = error.message;
       }
-      
       ToastAndroid.show(errorMessage, ToastAndroid.LONG);
     } finally {
       setIsLoading(false);
@@ -104,7 +97,7 @@ export default function SignIn() {
           placeholderTextColor="gray"
           keyboardType="email-address"
           autoCapitalize="none"
-          onChangeText={(value) => setEmail(value)}
+          onChangeText={setEmail}
           value={email}
           editable={!isLoading}
         />
@@ -119,7 +112,7 @@ export default function SignIn() {
           placeholderTextColor="gray"
           secureTextEntry={!passwordVisible}
           autoCapitalize="none"
-          onChangeText={(value) => setPassword(value)}
+          onChangeText={setPassword}
           value={password}
           editable={!isLoading}
         />
@@ -132,7 +125,7 @@ export default function SignIn() {
       <TouchableOpacity 
         onPress={onSignIn} 
         style={styles.signInButton}
-        disabled={isLoading}
+        disabled={isLoading || !email || !password || !validateEmail(email)}
       >
         {isLoading ? (
           <ActivityIndicator color="#fff" />
