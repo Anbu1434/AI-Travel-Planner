@@ -30,7 +30,7 @@ Here are the wireframes for the app:
 
 ![Wireframe 1](./assets/images/Select-travel-1.png)
 ![Wireframe 2](./assets/wireframes/Select-travel-2.png)
-![Wireframe 3](./assets/wireframes/Select-travel-3.png)
+![Wireframe 3](./assets/wireframes/Select-travel.png)
 
 ## Get a fresh project
 
