@@ -24,6 +24,13 @@ In the output, you'll find options to open the app in a
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 📱 App Wireframes
+
+Here are the wireframes for the app:
+
+![Wireframe 1](./assets/images/select-travel-1.png)
+![Wireframe 2](./assets/wireframes/select-travel-2.png)
+![Wireframe 3](./assets/wireframes/select-travel-3.png)
 
 ## Get a fresh project
 
