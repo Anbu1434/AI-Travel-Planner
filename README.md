@@ -28,9 +28,9 @@ You can start developing by editing the files inside the **app** directory. This
 
 Here are the wireframes for the app:
 
-![Wireframe 1](./assets/images/select-travel-1.png)
-![Wireframe 2](./assets/wireframes/select-travel-2.png)
-![Wireframe 3](./assets/wireframes/select-travel-3.png)
+![Wireframe 1](./assets/images/Select-travel-1.png)
+![Wireframe 2](./assets/wireframes/Select-travel-2.png)
+![Wireframe 3](./assets/wireframes/Select-travel-3.png)
 
 ## Get a fresh project
 
